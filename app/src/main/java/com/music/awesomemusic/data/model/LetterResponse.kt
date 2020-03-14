@@ -3,7 +3,7 @@ package com.music.awesomemusic.data.model
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class Letter(
+data class LetterResponse(
     @SerializedName("LetterID") val id: Int,
     @SerializedName("LetterName") val name: String,
     @SerializedName("Link") val link: String,

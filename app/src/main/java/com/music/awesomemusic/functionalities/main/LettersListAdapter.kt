@@ -3,9 +3,9 @@ package com.music.awesomemusic.functionalities.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.music.awesomemusic.data.model.Letter
+import com.music.awesomemusic.data.model.LetterResponse
 
-class LettersListAdapter(var items: List<Letter>) :
+class LettersListAdapter(var items: List<LetterResponse>) :
     RecyclerView.Adapter<LettersViewHolder>() {
 
 

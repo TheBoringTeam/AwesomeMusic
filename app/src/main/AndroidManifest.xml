@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:name=".AwesomeMusic"
         android:allowBackup="true"
@@ -14,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".functionalities.login.LoginActivity"></activity>
         <activity android:name=".functionalities.main.MainActivity" />
         <activity android:name=".functionalities.start.StartActivity">
             <intent-filter>

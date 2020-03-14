@@ -3,7 +3,7 @@ package com.music.awesomemusic.functionalities.main
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.music.awesomemusic.data.model.Letter
+import com.music.awesomemusic.data.model.LetterResponse
 import com.music.awesomemusic.data.repository.AwesomeMusicApiService
 import retrofit2.Call
 import retrofit2.Callback
@@ -14,7 +14,7 @@ class MainVM @Inject constructor(var service: AwesomeMusicApiService) : ViewMode
 
     private val _TAG = MainVM::class.java.simpleName
 
-    var listOfLetters = MutableLiveData<List<Letter>>()
+    var listOfLetters = MutableLiveData<List<LetterResponse>>()
 
     var event = MutableLiveData<MainState>()
 
@@ -26,12 +26,15 @@ class MainVM @Inject constructor(var service: AwesomeMusicApiService) : ViewMode
 
     fun fetchLetters() {
         val callLetters = service.getAllLetters()
-        callLetters.enqueue(object : Callback<List<Letter>> {
-            override fun onFailure(call: Call<List<Letter>>, t: Throwable) {
-                // TODO : OnFail
+        callLetters.enqueue(object : Callback<List<LetterResponse>> {
+            override fun onFailure(call: Call<List<LetterResponse>>, t: Throwable) {
+                Log.i(_TAG, "Some error ${t.message}")
             }
 
-            override fun onResponse(call: Call<List<Letter>>, response: Response<List<Letter>>) {
+            override fun onResponse(
+                call: Call<List<LetterResponse>>,
+                response: Response<List<LetterResponse>>
+            ) {
                 when (response.code()) {
                     200 -> {
                         Log.i(_TAG, "Letters list successful")

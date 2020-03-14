@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity(), Injectable {
         activity_main_rv_letters.adapter = _adapter
 
         _viewModel.listOfLetters.observe(this, Observer { items ->
+            Log.i(_TAG, "List has ${items.size} elements")
             _adapter.items = items
             _adapter.notifyDataSetChanged()
         })
