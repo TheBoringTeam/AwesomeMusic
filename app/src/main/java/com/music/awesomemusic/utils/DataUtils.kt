@@ -26,5 +26,14 @@ class DataUtils {
 
             return userInfo
         }
+
+        fun saveUserObject(
+            sharedPreference: SharedPreferences,
+            userDetailedInfo: UserDetailedInfo
+        ) {
+            val gson = Gson()
+            sharedPreference.edit()
+                .putString("userDetails", gson.toJson(userDetailedInfo)).apply()
+        }
     }
 }

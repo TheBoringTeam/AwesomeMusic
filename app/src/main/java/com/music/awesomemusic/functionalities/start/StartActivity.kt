@@ -32,7 +32,6 @@ class StartActivity : AppCompatActivity(), Injectable {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start)
 
         initBinding()
 
@@ -43,10 +42,10 @@ class StartActivity : AppCompatActivity(), Injectable {
         val userDetails = DataUtils.getUserObject(_sharedPref)
         if (userDetails != null) {
             _viewModel.validateUserAuth(userDetails.username, userDetails.password)
+        } else {
+            goToLogin()
+
         }
-
-        goToLogin()
-
     }
 
     private fun initBinding() {
