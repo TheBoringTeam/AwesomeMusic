@@ -5,4 +5,6 @@
     <string name="username">Username</string>
     <string name="log_in">Log in</string>
     <string name="sign_up">Sign up</string>
+    <string name="composer">Composer</string>
+    <string name="title">Title</string>
 </resources>

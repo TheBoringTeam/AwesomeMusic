@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.music.awesomemusic.data.model.LetterResponse
+import com.music.awesomemusic.data.model.MusicResponse
 
-class MusicListAdapter(var items: List<LetterResponse>) :
+class MusicListAdapter(var items: List<MusicResponse>) :
     RecyclerView.Adapter<MusicViewHolder>() {
 
 
@@ -20,6 +21,6 @@ class MusicListAdapter(var items: List<LetterResponse>) :
 
     override fun onBindViewHolder(holder: MusicViewHolder, position: Int) {
         val obj = items[position]
-        holder.bind(obj)
+        holder.bind(obj, items)
     }
 }

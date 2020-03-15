@@ -3,7 +3,7 @@ package com.music.awesomemusic.functionalities.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -31,7 +31,8 @@ class MainActivity : AppCompatActivity(), Injectable {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initBinding()
-        _viewModel.fetchLetters()
+
+        _viewModel.fetchMusic()
     }
 
     private fun initBinding() {
@@ -45,6 +46,9 @@ class MainActivity : AppCompatActivity(), Injectable {
 
         _viewModel.listOfLetters.observe(this, Observer { items ->
             Log.i(_TAG, "List has ${items.size} elements")
+            if (items.isEmpty()) {
+                Toast.makeText(applicationContext, "Not found", Toast.LENGTH_SHORT).show()
+            }
             _adapter.items = items
             _adapter.notifyDataSetChanged()
         })
