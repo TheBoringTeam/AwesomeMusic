@@ -1,4 +1,4 @@
-package com.music.awesomemusic.data.model
+package com.music.awesomemusic.data.model.responses
 
 import com.google.gson.annotations.SerializedName
 import java.util.*

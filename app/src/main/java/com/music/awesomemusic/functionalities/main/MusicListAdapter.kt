@@ -3,8 +3,7 @@ package com.music.awesomemusic.functionalities.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.music.awesomemusic.data.model.LetterResponse
-import com.music.awesomemusic.data.model.MusicResponse
+import com.music.awesomemusic.data.model.responses.MusicResponse
 
 class MusicListAdapter(var items: List<MusicResponse>) :
     RecyclerView.Adapter<MusicViewHolder>() {

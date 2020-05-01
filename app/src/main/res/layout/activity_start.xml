@@ -19,9 +19,9 @@
         tools:context=".functionalities.start.StartActivity">
 
         <ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:src="@drawable/awesome_music" />
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/awesome_music_logo" />
 
     </LinearLayout>
 </layout>

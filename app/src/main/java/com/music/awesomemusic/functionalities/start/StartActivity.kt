@@ -41,7 +41,6 @@ class StartActivity : AppCompatActivity(), Injectable {
 
         val userDetails = DataUtils.getUserObject(_sharedPref)
         if (userDetails != null) {
-            _viewModel.validateUserAuth(userDetails.username, userDetails.password)
         } else {
             goToLogin()
 
