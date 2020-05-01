@@ -41,8 +41,6 @@ class MainActivity : AppCompatActivity(), Injectable {
         _binding.viewModel = _viewModel
 
         _adapter = MusicListAdapter(listOf())
-        activity_main_rv_letters.layoutManager = GridLayoutManager(applicationContext, 1)
-        activity_main_rv_letters.adapter = _adapter
 
         _viewModel.listOfLetters.observe(this, Observer { items ->
             Log.i(_TAG, "List has ${items.size} elements")

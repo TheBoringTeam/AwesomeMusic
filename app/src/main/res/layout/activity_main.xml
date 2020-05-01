@@ -17,56 +17,6 @@
         android:orientation="vertical"
         tools:context=".functionalities.main.MainActivity">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ll_search_view"
-            android:orientation="horizontal">
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/ll_search_view"
-                android:drawablePadding="10dp"
-                android:hint="@string/composer"
-                android:inputType="text"
-                android:padding="15dp"
-                android:text="@={viewModel.composerObservable}"
-                android:textColor="@color/white"
-                android:textColorHighlight="@color/white"
-                android:textColorHint="@color/white" />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/ll_search_view"
-                android:drawablePadding="10dp"
-                android:hint="@string/title"
-                android:inputType="text"
-                android:padding="15dp"
-                android:text="@={viewModel.titleObservable}"
-                android:textColor="@color/white"
-                android:textColorHighlight="@color/white"
-                android:textColorHint="@color/white" />
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_baseline_search_24"
-                android:onClick="@{()->viewModel.fetchMusic()}" />
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/activity_main_rv_letters"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:scrollbars="vertical" />
-
     </LinearLayout>
 </layout>
 
