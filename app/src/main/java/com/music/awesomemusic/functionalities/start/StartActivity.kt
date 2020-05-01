@@ -109,13 +109,17 @@ class StartActivity : AppCompatActivity(), Injectable {
             duration = 2000
             start()
         }
-        ObjectAnimator.ofFloat(start_activity_logo, "translationY", -100f).apply {
+        ObjectAnimator.ofFloat(start_activity_logo, "translationY", -200f).apply {
             duration = 2000
             start()
         }
     }
     private fun showError(){
         ObjectAnimator.ofFloat(start_activity_error, "alpha", 1f).apply {
+            duration = 2000
+            start()
+        }
+        ObjectAnimator.ofFloat(start_activity_error, "translationY", -100f).apply {
             duration = 2000
             start()
         }
