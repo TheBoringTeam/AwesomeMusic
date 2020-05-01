@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.music.awesomemusic.R
-import com.music.awesomemusic.data.model.MusicResponse
+import com.music.awesomemusic.data.model.responses.MusicResponse
 import kotlinx.android.synthetic.main.card_music.view.*
 
 class MusicViewHolder(
