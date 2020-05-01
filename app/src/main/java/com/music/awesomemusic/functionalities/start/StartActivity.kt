@@ -1,10 +1,12 @@
 package com.music.awesomemusic.functionalities.start
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.animation.Animation
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -16,6 +18,7 @@ import com.music.awesomemusic.di.ViewModelInjectionFactory
 import com.music.awesomemusic.functionalities.login.LoginActivity
 import com.music.awesomemusic.functionalities.main.MainActivity
 import com.music.awesomemusic.utils.DataUtils
+import kotlinx.android.synthetic.main.activity_start.*
 import javax.inject.Inject
 
 class StartActivity : AppCompatActivity(), Injectable {
@@ -41,9 +44,9 @@ class StartActivity : AppCompatActivity(), Injectable {
 
         val userDetails = DataUtils.getUserObject(_sharedPref)
         if (userDetails != null) {
+
         } else {
             goToLogin()
-
         }
     }
 
@@ -65,6 +68,8 @@ class StartActivity : AppCompatActivity(), Injectable {
                 }
             }
         })
+
+        initAnimations()
     }
 
     private fun goToMain() {
@@ -77,5 +82,42 @@ class StartActivity : AppCompatActivity(), Injectable {
         val loginIntent = Intent(applicationContext, LoginActivity::class.java)
         startActivity(loginIntent)
         finish()
+    }
+
+
+    private fun initAnimations() {
+        val animation = startLoadingAnimation()
+
+        test_btn.setOnClickListener {
+            animation.cancel()
+            stopLoadingAnimation()
+            showError()
+        }
+    }
+
+    private fun startLoadingAnimation(): ObjectAnimator {
+        return ObjectAnimator.ofFloat(start_activity_logo, "rotation", 360f).apply {
+            repeatCount = Animation.INFINITE
+            duration = 5000
+            start()
+        }
+    }
+
+    private fun stopLoadingAnimation(){
+        start_activity_logo.clearAnimation()
+        ObjectAnimator.ofFloat(start_activity_logo, "rotation", 360f).apply {
+            duration = 2000
+            start()
+        }
+        ObjectAnimator.ofFloat(start_activity_logo, "translationY", -100f).apply {
+            duration = 2000
+            start()
+        }
+    }
+    private fun showError(){
+        ObjectAnimator.ofFloat(start_activity_error, "alpha", 1f).apply {
+            duration = 2000
+            start()
+        }
     }
 }
