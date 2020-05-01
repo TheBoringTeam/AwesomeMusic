@@ -58,8 +58,7 @@ class LoginActivity : AppCompatActivity(), Injectable {
                     _viewModel.event.value = LoginState.Wait
                 }
                 is LoginState.LoginSuccessful -> {
-                    DataUtils.saveUserObject(_sharedPref, event.userDetailedInfo)
-                    goToMain()
+
                 }
             }
         })

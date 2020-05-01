@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.Animation
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -37,17 +36,16 @@ class StartActivity : AppCompatActivity(), Injectable {
         super.onCreate(savedInstanceState)
 
         initBinding()
+        initLogic()
 
+    }
+
+    private fun initLogic() {
         _sharedPref = applicationContext.getSharedPreferences(
-            getString(R.string.preference_key), Context.MODE_PRIVATE
+                getString(R.string.preference_key), Context.MODE_PRIVATE
         )
 
-        val userDetails = DataUtils.getUserObject(_sharedPref)
-        if (userDetails != null) {
-
-        } else {
-            goToLogin()
-        }
+        _viewModel.authorizeUser(DataUtils.getToken(_sharedPref))
     }
 
     private fun initBinding() {
@@ -55,21 +53,23 @@ class StartActivity : AppCompatActivity(), Injectable {
         _viewModel = ViewModelProviders.of(this, viewModelInjectionFactory).get(StartVM::class.java)
         _binding.viewModel = _viewModel
 
+        val logoAnim = startLogoAnimation()
+
         _viewModel.event.observe(this, Observer { event ->
             when (event) {
-                is StartState.Error -> {
-                    Toast.makeText(applicationContext, event.message, Toast.LENGTH_SHORT).show()
+                is StartState.Error -> { // if error, then show error message with animation
+                    stopLogoAnimation(logoAnim)
+                    showErrorAnimation(event.message)
                 }
-                StartState.UserEmpty -> {
-                    goToLogin()
-                }
-                StartState.UserAuthCorrect -> {
+                is StartState.UserAuthCorrect -> { // if correct auth, then save to cache and goToMain
+                    DataUtils.saveUserObject(_sharedPref, event.response)
                     goToMain()
+                }
+                StartState.UserAuthFail -> { // if invalid token, then go to login
+                    goToLogin()
                 }
             }
         })
-
-        initAnimations()
     }
 
     private fun goToMain() {
@@ -84,18 +84,7 @@ class StartActivity : AppCompatActivity(), Injectable {
         finish()
     }
 
-
-    private fun initAnimations() {
-        val animation = startLoadingAnimation()
-
-        test_btn.setOnClickListener {
-            animation.cancel()
-            stopLoadingAnimation()
-            showError()
-        }
-    }
-
-    private fun startLoadingAnimation(): ObjectAnimator {
+    private fun startLogoAnimation(): ObjectAnimator {
         return ObjectAnimator.ofFloat(start_activity_logo, "rotation", 360f).apply {
             repeatCount = Animation.INFINITE
             duration = 5000
@@ -103,8 +92,8 @@ class StartActivity : AppCompatActivity(), Injectable {
         }
     }
 
-    private fun stopLoadingAnimation(){
-        start_activity_logo.clearAnimation()
+    private fun stopLogoAnimation(anim: ObjectAnimator) {
+        anim.cancel()
         ObjectAnimator.ofFloat(start_activity_logo, "rotation", 360f).apply {
             duration = 2000
             start()
@@ -114,7 +103,9 @@ class StartActivity : AppCompatActivity(), Injectable {
             start()
         }
     }
-    private fun showError(){
+
+    private fun showErrorAnimation(message: String) {
+        start_activity_error.text = message
         ObjectAnimator.ofFloat(start_activity_error, "alpha", 1f).apply {
             duration = 2000
             start()
