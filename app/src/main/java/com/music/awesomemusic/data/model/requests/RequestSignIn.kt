@@ -1,3 +1,9 @@
 package com.music.awesomemusic.data.model.requests
 
-data class RequestSignIn(val username: String, val password: String)
+import com.google.gson.annotations.SerializedName
+
+data class RequestSignIn(
+        @SerializedName("username")
+        var username: String,
+        @SerializedName("password")
+        var password: String)

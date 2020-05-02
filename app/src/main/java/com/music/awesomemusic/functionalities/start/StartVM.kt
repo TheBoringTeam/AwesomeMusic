@@ -4,14 +4,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.music.awesomemusic.data.model.responses.ResponseAuthorization
-import com.music.awesomemusic.data.model.responses.UserAuthResponse
-import com.music.awesomemusic.data.repository.UserRepository
+import com.music.awesomemusic.data.repository.UserApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class StartVM @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+class StartVM @Inject constructor(private val userApiService: UserApiService) : ViewModel() {
 
     private val _TAG = StartVM::class.java.simpleName
 
@@ -24,7 +23,7 @@ class StartVM @Inject constructor(private val userRepository: UserRepository) : 
             return
         }
 
-        val tokenCall = userRepository.authorizeUser("AwesomeToken $token")
+        val tokenCall = userApiService.authorizeUser("AwesomeToken $token")
 
         tokenCall.enqueue(object : Callback<ResponseAuthorization> {
             override fun onFailure(call: Call<ResponseAuthorization>, t: Throwable) {

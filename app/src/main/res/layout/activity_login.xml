@@ -21,8 +21,9 @@
         <!--Logo-->
 
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:layout_marginTop="30dp"
             android:src="@drawable/awesome_music_logo"
             android:transitionName="start_logo"
@@ -30,12 +31,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/itim"
+            android:text="Awemusic"
+            android:textColor="#ffffff"
+            android:textSize="45sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
         <LinearLayout
+            android:id="@+id/login_activity_card_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="80dp"
             android:background="@drawable/holder_login_activity_cred"
             android:orientation="vertical"
+            android:translationY="300sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -76,15 +92,16 @@
 
             <TextView
                 android:id="@+id/login_activity_tv_bad_credentials"
+                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="30dp"
                 android:fontFamily="@font/ubuntu_mono_bold"
-                android:textSize="20sp"
-                android:text="Bad credetials"
-                android:textColor="@color/red" />
+                android:text="Wrong credetials"
+                android:textColor="@color/red"
+                android:textSize="20sp" />
 
             <Button
                 android:layout_width="match_parent"

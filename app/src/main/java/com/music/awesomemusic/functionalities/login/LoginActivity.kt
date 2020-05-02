@@ -1,10 +1,14 @@
 package com.music.awesomemusic.functionalities.login
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -19,6 +23,8 @@ import com.music.awesomemusic.functionalities.start.StartActivity
 import com.music.awesomemusic.functionalities.start.StartState
 import com.music.awesomemusic.functionalities.start.StartVM
 import com.music.awesomemusic.utils.DataUtils
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_start.*
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity(), Injectable {
@@ -37,10 +43,16 @@ class LoginActivity : AppCompatActivity(), Injectable {
         super.onCreate(savedInstanceState)
 
         _sharedPref = applicationContext.getSharedPreferences(
-            getString(R.string.preference_key), Context.MODE_PRIVATE
+                getString(R.string.preference_key), Context.MODE_PRIVATE
         )
 
         initBinding()
+//        initLogic()
+        initStartAnimation()
+    }
+
+    private fun initLogic() {
+        TODO("Not yet implemented")
     }
 
     private fun initBinding() {
@@ -58,10 +70,25 @@ class LoginActivity : AppCompatActivity(), Injectable {
                     _viewModel.event.value = LoginState.Wait
                 }
                 is LoginState.LoginSuccessful -> {
-
+                    goToMain()
+                }
+                is LoginState.WrongCredentials -> {
+                    showBadCredentials()
                 }
             }
         })
+    }
+
+    private fun initStartAnimation() {
+        ObjectAnimator.ofFloat(login_activity_card_login, "translationY", 0f).apply {
+            duration = 1000
+            start()
+        }
+    }
+
+    private fun showBadCredentials() {
+        login_activity_tv_bad_credentials.visibility = View.VISIBLE
+        login_activity_tv_bad_credentials.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake))
     }
 
     private fun goToMain() {
