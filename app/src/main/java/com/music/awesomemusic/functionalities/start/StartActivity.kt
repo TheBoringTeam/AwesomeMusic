@@ -1,11 +1,15 @@
 package com.music.awesomemusic.functionalities.start
 
 import android.animation.ObjectAnimator
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.util.Pair
+import android.view.View
 import android.view.animation.Animation
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -38,6 +42,12 @@ class StartActivity : AppCompatActivity(), Injectable {
         initBinding()
         initLogic()
 
+//        Handler().postDelayed(object : Runnable{
+//            override fun run() {
+//                initLogic()
+//            }
+//
+//        }, 2000)
     }
 
     private fun initLogic() {
@@ -80,6 +90,9 @@ class StartActivity : AppCompatActivity(), Injectable {
 
     private fun goToLogin() {
         val loginIntent = Intent(applicationContext, LoginActivity::class.java)
+//        val pair = Pair<View, String>(start_activity_logo, "start_logo")
+//        val options = ActivityOptions.makeSceneTransitionAnimation(this, pair)
+
         startActivity(loginIntent)
         finish()
     }

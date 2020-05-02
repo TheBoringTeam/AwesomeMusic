@@ -13,14 +13,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="vertical"
         tools:context=".functionalities.start.StartActivity">
 
+        <!--Logo-->
         <ImageView
             android:id="@+id/start_activity_logo"
             android:layout_width="150dp"
+            android:transitionName="start_logo"
             android:layout_height="150dp"
             android:src="@drawable/awesome_music_logo"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -28,22 +30,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/test_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/start_activity_logo" />
-
         <TextView
             android:id="@+id/start_activity_error"
-            android:alpha="0"
             android:layout_width="300dp"
             android:layout_height="200dp"
             android:layout_marginBottom="60dp"
+            android:alpha="0"
             android:background="@drawable/holder_start_activity_error_msg"
             android:fontFamily="@font/lato"
             android:padding="20dp"

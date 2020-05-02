@@ -24,7 +24,7 @@ class StartVM @Inject constructor(private val userRepository: UserRepository) : 
             return
         }
 
-        val tokenCall = userRepository.authorizeUser(token)
+        val tokenCall = userRepository.authorizeUser("AwesomeToken $token")
 
         tokenCall.enqueue(object : Callback<ResponseAuthorization> {
             override fun onFailure(call: Call<ResponseAuthorization>, t: Throwable) {
