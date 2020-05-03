@@ -19,6 +19,7 @@ import com.music.awesomemusic.databinding.ActivityStartBinding
 import com.music.awesomemusic.di.Injectable
 import com.music.awesomemusic.di.ViewModelInjectionFactory
 import com.music.awesomemusic.functionalities.main.MainActivity
+import com.music.awesomemusic.functionalities.sign_up.SignUpActivity
 import com.music.awesomemusic.functionalities.start.StartActivity
 import com.music.awesomemusic.functionalities.start.StartState
 import com.music.awesomemusic.functionalities.start.StartVM
@@ -63,13 +64,15 @@ class LoginActivity : AppCompatActivity(), Injectable {
         _viewModel.event.observe(this, Observer { event ->
             when (event) {
                 LoginState.SignUp -> {
-
+                    goToSignUp()
                 }
                 is LoginState.Error -> {
+                    // TODO: Create some beautiful alert for error message
                     Toast.makeText(applicationContext, event.message, Toast.LENGTH_LONG).show()
                     _viewModel.event.value = LoginState.Wait
                 }
                 is LoginState.LoginSuccessful -> {
+                    DataUtils.saveToken(_sharedPref, token = event.token)
                     goToMain()
                 }
                 is LoginState.WrongCredentials -> {
@@ -89,6 +92,11 @@ class LoginActivity : AppCompatActivity(), Injectable {
     private fun showBadCredentials() {
         login_activity_tv_bad_credentials.visibility = View.VISIBLE
         login_activity_tv_bad_credentials.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake))
+    }
+
+    private fun goToSignUp() {
+        val signUpIntent = Intent(applicationContext, SignUpActivity::class.java)
+        startActivity(signUpIntent)
     }
 
     private fun goToMain() {
