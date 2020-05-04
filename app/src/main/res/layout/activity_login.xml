@@ -32,6 +32,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/login_activity_tv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -48,13 +49,13 @@
             android:id="@+id/login_activity_card_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="80dp"
             android:background="@drawable/holder_login_activity_cred"
             android:orientation="vertical"
-            android:translationY="300sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_activity_tv_logo"
+            app:layout_constraintVertical_bias="0.5">
 
             <EditText
                 android:layout_width="match_parent"
@@ -92,7 +93,6 @@
 
             <TextView
                 android:id="@+id/login_activity_tv_bad_credentials"
-                android:visibility="invisible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -101,7 +101,8 @@
                 android:fontFamily="@font/ubuntu_mono_bold"
                 android:text="Wrong credetials"
                 android:textColor="@color/red"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:visibility="invisible" />
 
             <Button
                 android:layout_width="match_parent"
@@ -115,14 +116,6 @@
                 android:padding="15dp"
                 android:shadowColor="@android:color/transparent"
                 android:text="@string/log_in" />
-
-            <!--        <com.airbnb.lottie.LottieAnimationView-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="50dp"-->
-            <!--            app:lottie_autoPlay="true"-->
-            <!--            app:lottie_loop="true"-->
-            <!--            app:lottie_rawRes="@raw/anim_btn_floating_white"-->
-            <!--            />-->
 
             <Button
                 android:layout_width="match_parent"

@@ -83,6 +83,7 @@ class LoginActivity : AppCompatActivity(), Injectable {
     }
 
     private fun initStartAnimation() {
+        login_activity_card_login.translationY = 300f
         ObjectAnimator.ofFloat(login_activity_card_login, "translationY", 0f).apply {
             duration = 1000
             start()

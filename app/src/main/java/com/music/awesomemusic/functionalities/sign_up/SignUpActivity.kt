@@ -35,4 +35,7 @@ class SignUpActivity : AppCompatActivity() {
         _viewModel = ViewModelProviders.of(this, viewModelInjectionFactory).get(SignUpVM::class.java)
         _binding.viewModel = _viewModel
     }
+
+    private fun initLogic() {
+    }
 }
