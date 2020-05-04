@@ -22,8 +22,6 @@ class MainActivity : AppCompatActivity(), Injectable {
     private lateinit var _binding: ActivityMainBinding
     private lateinit var _viewModel: MainVM
 
-    private lateinit var _adapter: MusicListAdapter
-
     @Inject
     lateinit var viewModelInjectionFactory: ViewModelInjectionFactory<MainVM>
 
@@ -40,15 +38,6 @@ class MainActivity : AppCompatActivity(), Injectable {
         _viewModel = ViewModelProviders.of(this, viewModelInjectionFactory).get(MainVM::class.java)
         _binding.viewModel = _viewModel
 
-        _adapter = MusicListAdapter(listOf())
 
-        _viewModel.listOfLetters.observe(this, Observer { items ->
-            Log.i(_TAG, "List has ${items.size} elements")
-            if (items.isEmpty()) {
-                Toast.makeText(applicationContext, "Not found", Toast.LENGTH_SHORT).show()
-            }
-            _adapter.items = items
-            _adapter.notifyDataSetChanged()
-        })
     }
 }

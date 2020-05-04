@@ -8,12 +8,13 @@ import androidx.lifecycle.ViewModelProviders
 import com.music.awesomemusic.R
 import com.music.awesomemusic.databinding.ActivitySignUpBinding
 import com.music.awesomemusic.databinding.ActivityStartBinding
+import com.music.awesomemusic.di.Injectable
 import com.music.awesomemusic.di.ViewModelInjectionFactory
 import com.music.awesomemusic.functionalities.start.StartActivity
 import com.music.awesomemusic.functionalities.start.StartVM
 import javax.inject.Inject
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity(), Injectable {
     private val _TAG = SignUpActivity::class.java.name
 
     private lateinit var _binding: ActivitySignUpBinding

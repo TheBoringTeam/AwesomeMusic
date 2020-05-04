@@ -19,6 +19,7 @@ class StartVM @Inject constructor(private val userApiService: UserApiService) : 
     fun authorizeUser(token: String) {
         // if token is empty, then go to login
         if (token.isEmpty()) {
+            Log.i(_TAG, "[authorizeUser] Token is empty.")
             event.value = StartState.UserAuthFail
             return
         }

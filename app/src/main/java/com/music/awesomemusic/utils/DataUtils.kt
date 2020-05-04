@@ -19,7 +19,7 @@ class DataUtils {
         }
 
         fun saveToken(sharedPreference: SharedPreferences, token: String) {
-            sharedPreference.edit().putString("token", token)
+            sharedPreference.edit().putString("token", token).apply()
         }
 
         fun saveUserObject(sharedPreference: SharedPreferences,
