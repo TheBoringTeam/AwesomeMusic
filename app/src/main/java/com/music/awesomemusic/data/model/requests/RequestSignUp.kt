@@ -8,5 +8,7 @@ data class RequestSignUp(
         @SerializedName("password")
         val password: String,
         @SerializedName("email")
-        val email: String
+        val email: String,
+        @SerializedName("is_collective")
+        val isCollective: Boolean
 )

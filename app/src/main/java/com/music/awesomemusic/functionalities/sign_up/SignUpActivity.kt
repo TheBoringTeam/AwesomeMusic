@@ -33,6 +33,7 @@ class SignUpActivity : AppCompatActivity(), Injectable {
         super.onCreate(savedInstanceState)
 
         initBinding()
+        initLogic()
     }
 
     private fun initBinding() {
@@ -52,7 +53,8 @@ class SignUpActivity : AppCompatActivity(), Injectable {
                     Toast.makeText(applicationContext, event.message, Toast.LENGTH_LONG).show()
                 }
                 is SignUpState.ValidationError -> {
-
+                    //TODO: Create some kinda of message on the screen for validation errors
+                    Toast.makeText(applicationContext, event.message, Toast.LENGTH_SHORT).show()
                 }
             }
         })

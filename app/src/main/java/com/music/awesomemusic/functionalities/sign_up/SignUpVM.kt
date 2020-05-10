@@ -29,8 +29,13 @@ class SignUpVM @Inject constructor(private val _userService: UserApiService) : V
             return
         }
 
-        val signUpCall = _userService.signUp(RequestSignUp(usernameObservableField.get().toString(),
-                passwordObservable.get().toString(), emailObservableField.get().toString()))
+        // TODO: Change isCollective to some state after specification gonna be ready
+        val signUpCall = _userService.signUp(
+            RequestSignUp(
+                usernameObservableField.get().toString(),
+                passwordObservable.get().toString(), emailObservableField.get().toString(), false
+            )
+        )
 
         signUpCall.enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -72,7 +77,8 @@ class SignUpVM @Inject constructor(private val _userService: UserApiService) : V
         }
 
         if (username.length > 16) {
-            event.value = SignUpState.ValidationError("Username has to be no more than 16 characters")
+            event.value =
+                SignUpState.ValidationError("Username has to be no more than 16 characters")
             return false
         }
 

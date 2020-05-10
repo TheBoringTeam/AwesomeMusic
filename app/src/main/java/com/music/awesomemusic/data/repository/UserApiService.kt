@@ -16,6 +16,6 @@ interface UserApiService {
     @GET("/api/user/me")
     fun authorizeUser(@Header("Authorization") token: String): Call<ResponseAuthorization>
 
-    @GET("/api/user/registration")
+    @POST("/api/user/registration")
     fun signUp(@Body requestSignUp: RequestSignUp) : Call<ResponseBody>
 }
