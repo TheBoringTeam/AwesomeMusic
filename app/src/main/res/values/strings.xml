@@ -11,5 +11,6 @@
     <string name="email">Email</string>
     <string name="dont_have_account">Don\'t have an account? Sign up here!</string>
     <string name="demo_version">Sorry, this is demo version</string>
+    <string name="wrong_credentials">Wrong credentials</string>
 
 </resources>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,9 +10,7 @@
             type="com.music.awesomemusic.functionalities.sign_up.SignUpVM" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimaryDark"
@@ -19,33 +19,22 @@
         tools:context=".SignUpActivity">
 
         <TextView
+            android:id="@+id/sign_up_activity_tv_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginTop="28dp"
             android:fontFamily="@font/itim"
             android:text="@string/sign_up"
             android:textColor="@color/white"
-            android:textSize="50sp" />
+            android:textSize="50sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/et_credentials"
-            android:drawableStart="@drawable/ic_baseline_person_24"
-            android:drawableLeft="@drawable/ic_baseline_person_24"
-            android:drawablePadding="10dp"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:padding="15dp"
-            android:text="@={viewModel.emailObservableField}"
-            android:textColor="@color/white"
-            android:textColorHighlight="@color/white"
-            android:textColorHint="@color/white" />
-
-        <EditText
+            android:id="@+id/sign_up_activity_et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -59,9 +48,31 @@
             android:text="@={viewModel.usernameObservableField}"
             android:textColor="@color/white"
             android:textColorHighlight="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_activity_tv_sign_up"
+            tools:layout_editor_absoluteX="20dp" />
 
         <EditText
+            android:id="@+id/sign_up_activity_et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/et_credentials"
+            android:drawableStart="@drawable/ic_baseline_person_24"
+            android:drawableLeft="@drawable/ic_baseline_person_24"
+            android:drawablePadding="10dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:padding="15dp"
+            android:text="@={viewModel.emailObservableField}"
+            android:textColor="@color/white"
+            android:textColorHighlight="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_activity_et_username" />
+
+
+        <EditText
+            android:id="@+id/sign_up_activity_et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -75,9 +86,12 @@
             android:text="@={viewModel.passwordObservable}"
             android:textColor="@color/white"
             android:textColorHighlight="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_activity_et_email"
+            tools:layout_editor_absoluteX="30dp" />
 
         <EditText
+            android:id="@+id/sign_up_activity_et_password_conf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -91,21 +105,37 @@
             android:text="@={viewModel.passwordConfirmObservable}"
             android:textColor="@color/white"
             android:textColorHighlight="@color/white"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_activity_et_password"
+            tools:layout_editor_absoluteX="30dp" />
+
+        <TextView
+            android:id="@+id/sign_up_activity_tv_validation_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/ubuntu_mono_bold"
+            android:text="@string/wrong_credentials"
+            android:textColor="@color/red"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sign_up_activity_et_password_conf" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="50dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/btn_login"
             android:onClick="@{()->viewModel.signUp()}"
             android:padding="15dp"
             android:shadowColor="@android:color/transparent"
-            android:text="Next" />
+            android:text="Sign Up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
