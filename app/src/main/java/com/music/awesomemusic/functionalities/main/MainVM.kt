@@ -4,10 +4,10 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.music.awesomemusic.data.model.responses.MusicResponse
-import com.music.awesomemusic.data.repository.UserRepository
+import com.music.awesomemusic.data.repository.UserApiService
 import javax.inject.Inject
 
-class MainVM @Inject constructor(var service: UserRepository) : ViewModel() {
+class MainVM @Inject constructor(var service: UserApiService) : ViewModel() {
 
     private val _TAG = MainVM::class.java.simpleName
 

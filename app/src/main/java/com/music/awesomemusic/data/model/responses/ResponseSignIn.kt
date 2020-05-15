@@ -1,3 +1,8 @@
 package com.music.awesomemusic.data.model.responses
 
-data class ResponseSignIn(val token: String)
+import com.google.gson.annotations.SerializedName
+
+data class ResponseSignIn(
+        @SerializedName("token")
+        val token: String
+)
