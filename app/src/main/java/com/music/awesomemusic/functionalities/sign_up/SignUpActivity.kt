@@ -2,11 +2,11 @@ package com.music.awesomemusic.functionalities.sign_up
 
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -14,8 +14,8 @@ import com.music.awesomemusic.R
 import com.music.awesomemusic.databinding.ActivitySignUpBinding
 import com.music.awesomemusic.di.Injectable
 import com.music.awesomemusic.di.ViewModelInjectionFactory
+import com.music.awesomemusic.functionalities.dialogs.error.DialogErrorFragment
 import com.music.awesomemusic.functionalities.login.LoginActivity
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import javax.inject.Inject
 
@@ -52,6 +52,8 @@ class SignUpActivity : AppCompatActivity(), Injectable {
                 }
                 is SignUpState.Error -> {
                     //TODO: Create beautiful alert
+                    val errorDialog = DialogErrorFragment(event.message)
+                    errorDialog.show(supportFragmentManager, "Error dialog")
                     Toast.makeText(applicationContext, event.message, Toast.LENGTH_LONG).show()
                 }
                 is SignUpState.ValidationError -> {
