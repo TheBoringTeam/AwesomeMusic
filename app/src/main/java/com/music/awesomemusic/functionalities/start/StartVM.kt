@@ -1,45 +1,55 @@
 package com.music.awesomemusic.functionalities.start
 
 import android.util.Log
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.music.awesomemusic.data.model.UserAuthResponse
-import com.music.awesomemusic.data.repository.AwesomeMusicApiService
+import com.music.awesomemusic.data.model.responses.ResponseAuthorization
+import com.music.awesomemusic.data.repository.UserApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class StartVM @Inject constructor(val service: AwesomeMusicApiService) : ViewModel() {
+class StartVM @Inject constructor(private val userApiService: UserApiService) : ViewModel() {
 
     private val _TAG = StartVM::class.java.simpleName
 
     var event = MutableLiveData<StartState>()
 
+    fun authorizeUser(token: String) {
+        // if token is empty, then go to login
+        if (token.isEmpty()) {
+            Log.i(_TAG, "[authorizeUser] Token is empty.")
+            event.value = StartState.UserAuthFail
+            return
+        }
 
-    fun validateUserAuth(login: String, password: String) {
-        val callUserAuth = service.getAuthUser(login, password)
-        callUserAuth.enqueue(object : Callback<List<UserAuthResponse>> {
-            override fun onFailure(call: Call<List<UserAuthResponse>>, t: Throwable) {
-                Log.e(_TAG, "Error while pulling user authentication : ${t.message}")
+        val tokenCall = userApiService.authorizeUser("AwesomeToken $token")
+
+        tokenCall.enqueue(object : Callback<ResponseAuthorization> {
+            override fun onFailure(call: Call<ResponseAuthorization>, t: Throwable) {
+                Log.e(_TAG, "[authorizeUser] Error during pulling auth info: ${t.message}")
+                event.value = StartState.Error("Servers are currently unavailable. Try later.")
             }
 
-            override fun onResponse(
-                call: Call<List<UserAuthResponse>>,
-                response: Response<List<UserAuthResponse>>
-            ) {
+            override fun onResponse(call: Call<ResponseAuthorization>, response: Response<ResponseAuthorization>) {
                 when (response.code()) {
                     200 -> {
-                        Log.i(_TAG, "Successful pulling user authentication")
-                        event.value = StartState.UserAuthCorrect
+                        // Auth is correct
+                        Log.i(_TAG, "[authorizeUser] Token is valid.")
+                        event.value = StartState.UserAuthCorrect(response.body()!!)
+                    }
+                    403 -> {
+                        Log.i(_TAG, "[authorizeUser] Token is not valid.")
+                        event.value = StartState.UserAuthFail
                     }
                     else -> {
-                        Log.i(_TAG, "User is empty")
-                        event.value = StartState.UserEmpty
+                        Log.e(_TAG, "[authorizeUser] Unhandled response code ${response.code()}")
+                        event.value = StartState.Error("Servers are currently unavailable. Try later.")
                     }
                 }
             }
+
         })
     }
 }

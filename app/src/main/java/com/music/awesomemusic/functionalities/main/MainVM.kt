@@ -1,22 +1,22 @@
 package com.music.awesomemusic.functionalities.main
 
-import android.util.Log
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.music.awesomemusic.data.model.LetterResponse
-import com.music.awesomemusic.data.repository.AwesomeMusicApiService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.music.awesomemusic.data.model.responses.MusicResponse
+import com.music.awesomemusic.data.repository.UserApiService
 import javax.inject.Inject
 
-class MainVM @Inject constructor(var service: AwesomeMusicApiService) : ViewModel() {
+class MainVM @Inject constructor(var service: UserApiService) : ViewModel() {
 
     private val _TAG = MainVM::class.java.simpleName
 
-    var listOfLetters = MutableLiveData<List<LetterResponse>>()
+    var listOfLetters = MutableLiveData<List<MusicResponse>>()
 
     var event = MutableLiveData<MainState>()
+
+    var composerObservable = ObservableField<String>()
+    var titleObservable = ObservableField<String>()
 
 
     init {
@@ -24,31 +24,8 @@ class MainVM @Inject constructor(var service: AwesomeMusicApiService) : ViewMode
     }
 
 
-    fun fetchLetters() {
-        val callLetters = service.getAllLetters()
-        callLetters.enqueue(object : Callback<List<LetterResponse>> {
-            override fun onFailure(call: Call<List<LetterResponse>>, t: Throwable) {
-                Log.i(_TAG, "Some error ${t.message}")
-            }
-
-            override fun onResponse(
-                call: Call<List<LetterResponse>>,
-                response: Response<List<LetterResponse>>
-            ) {
-                when (response.code()) {
-                    200 -> {
-                        Log.i(_TAG, "Letters list successful")
-                        listOfLetters.value = response.body()!!
-                    }
-                    else -> {
-                        Log.e(_TAG, "Unhandled status code")
-                        event.value = MainState.Error("Unhandled code ${response.code()}")
-                    }
-                }
-            }
-
-        })
-
+    fun logOut() {
+        event.value = MainState.LogOut
     }
 
 }

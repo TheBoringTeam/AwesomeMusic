@@ -1,11 +1,16 @@
 package com.music.awesomemusic.functionalities.start
 
+import android.animation.ObjectAnimator
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import android.os.Handler
+import android.util.Pair
+import android.view.View
+import android.view.animation.Animation
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,6 +21,7 @@ import com.music.awesomemusic.di.ViewModelInjectionFactory
 import com.music.awesomemusic.functionalities.login.LoginActivity
 import com.music.awesomemusic.functionalities.main.MainActivity
 import com.music.awesomemusic.utils.DataUtils
+import kotlinx.android.synthetic.main.activity_start.*
 import javax.inject.Inject
 
 class StartActivity : AppCompatActivity(), Injectable {
@@ -34,18 +40,22 @@ class StartActivity : AppCompatActivity(), Injectable {
         super.onCreate(savedInstanceState)
 
         initBinding()
+        initLogic()
 
+//        Handler().postDelayed(object : Runnable{
+//            override fun run() {
+//                initLogic()
+//            }
+//
+//        }, 2000)
+    }
+
+    private fun initLogic() {
         _sharedPref = applicationContext.getSharedPreferences(
-            getString(R.string.preference_key), Context.MODE_PRIVATE
+                getString(R.string.preference_key), Context.MODE_PRIVATE
         )
 
-        val userDetails = DataUtils.getUserObject(_sharedPref)
-        if (userDetails != null) {
-            _viewModel.validateUserAuth(userDetails.username, userDetails.password)
-        } else {
-            goToLogin()
-
-        }
+        _viewModel.authorizeUser(DataUtils.getToken(_sharedPref))
     }
 
     private fun initBinding() {
@@ -53,16 +63,20 @@ class StartActivity : AppCompatActivity(), Injectable {
         _viewModel = ViewModelProviders.of(this, viewModelInjectionFactory).get(StartVM::class.java)
         _binding.viewModel = _viewModel
 
+        val logoAnim = startLogoAnimation()
+
         _viewModel.event.observe(this, Observer { event ->
             when (event) {
-                is StartState.Error -> {
-                    Toast.makeText(applicationContext, event.message, Toast.LENGTH_SHORT).show()
+                is StartState.Error -> { // if error, then show error message with animation
+                    stopLogoAnimation(logoAnim)
+                    showErrorAnimation(event.message)
                 }
-                StartState.UserEmpty -> {
-                    goToLogin()
-                }
-                StartState.UserAuthCorrect -> {
+                is StartState.UserAuthCorrect -> { // if correct auth, then save to cache and goToMain
+                    DataUtils.saveUserObject(_sharedPref, event.response)
                     goToMain()
+                }
+                StartState.UserAuthFail -> { // if invalid token, then go to login
+                    goToLogin()
                 }
             }
         })
@@ -76,7 +90,42 @@ class StartActivity : AppCompatActivity(), Injectable {
 
     private fun goToLogin() {
         val loginIntent = Intent(applicationContext, LoginActivity::class.java)
+//        val pair = Pair<View, String>(start_activity_logo, "start_logo")
+//        val options = ActivityOptions.makeSceneTransitionAnimation(this, pair)
+
         startActivity(loginIntent)
         finish()
+    }
+
+    private fun startLogoAnimation(): ObjectAnimator {
+        return ObjectAnimator.ofFloat(start_activity_logo, "rotation", 360f).apply {
+            repeatCount = Animation.INFINITE
+            duration = 5000
+            start()
+        }
+    }
+
+    private fun stopLogoAnimation(anim: ObjectAnimator) {
+        anim.cancel()
+        ObjectAnimator.ofFloat(start_activity_logo, "rotation", 360f).apply {
+            duration = 2000
+            start()
+        }
+        ObjectAnimator.ofFloat(start_activity_logo, "translationY", -200f).apply {
+            duration = 2000
+            start()
+        }
+    }
+
+    private fun showErrorAnimation(message: String) {
+        start_activity_error.text = message
+        ObjectAnimator.ofFloat(start_activity_error, "alpha", 1f).apply {
+            duration = 2000
+            start()
+        }
+        ObjectAnimator.ofFloat(start_activity_error, "translationY", -100f).apply {
+            duration = 2000
+            start()
+        }
     }
 }

@@ -1,39 +1,36 @@
 package com.music.awesomemusic.utils
 
 import android.content.SharedPreferences
-import android.util.Log
 import com.google.gson.Gson
-import com.music.awesomemusic.data.model.UserDetailedInfo
+import com.music.awesomemusic.data.model.responses.ResponseAuthorization
 
 class DataUtils {
 
     companion object {
-        fun getUserObject(sharedPreference: SharedPreferences): UserDetailedInfo? {
+        fun getUserObject(sharedPreference: SharedPreferences): ResponseAuthorization? {
             val gson = Gson()
             val json: String = sharedPreference.getString("userDetails", "").toString()
-            val userInfo = gson.fromJson(json, UserDetailedInfo::class.java)
-            if (userInfo != null) {
-                Log.i(
-                    DataUtils::class.java.simpleName,
-                    "User was pulled from shared pref : username : ${userInfo.username}, id : ${userInfo.id}"
-                )
-            } else {
-                Log.i(
-                    DataUtils::class.java.simpleName,
-                    "User Auth is empty"
-                )
-            }
 
-            return userInfo
+            return gson.fromJson(json, ResponseAuthorization::class.java)
         }
 
-        fun saveUserObject(
-            sharedPreference: SharedPreferences,
-            userDetailedInfo: UserDetailedInfo
-        ) {
+        fun getToken(sharedPreference: SharedPreferences): String {
+            return sharedPreference.getString("token", "").toString()
+        }
+
+        fun saveToken(sharedPreference: SharedPreferences, token: String) {
+            sharedPreference.edit().putString("token", token).apply()
+        }
+
+        fun saveUserObject(sharedPreference: SharedPreferences,
+                           userDetailedInfo: ResponseAuthorization) {
             val gson = Gson()
             sharedPreference.edit()
-                .putString("userDetails", gson.toJson(userDetailedInfo)).apply()
+                    .putString("userDetails", gson.toJson(userDetailedInfo)).apply()
+        }
+
+        fun deleteAllData(sharedPreference: SharedPreferences) {
+            sharedPreference.edit().clear().apply()
         }
     }
 }
