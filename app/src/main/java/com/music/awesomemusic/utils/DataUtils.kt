@@ -28,5 +28,9 @@ class DataUtils {
             sharedPreference.edit()
                     .putString("userDetails", gson.toJson(userDetailedInfo)).apply()
         }
+
+        fun deleteAllData(sharedPreference: SharedPreferences) {
+            sharedPreference.edit().clear().apply()
+        }
     }
 }
