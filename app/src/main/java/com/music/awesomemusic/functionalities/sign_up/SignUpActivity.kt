@@ -65,7 +65,7 @@ class SignUpActivity : AppCompatActivity(), Injectable {
     }
 
     private fun showRegistrationSuccess() {
-        // TODO("Implement alert that shows success registration message.")
+        // TODO: "Implement alert that shows success registration message."
         goToLogin()
     }
 
