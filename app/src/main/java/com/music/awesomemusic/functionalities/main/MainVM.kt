@@ -24,7 +24,8 @@ class MainVM @Inject constructor(var service: UserApiService) : ViewModel() {
     }
 
 
-    fun fetchMusic() {
+    fun logOut() {
+        event.value = MainState.LogOut
     }
 
 }
