@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.preference.PreferenceManager
+import com.music.awesomemusic.utils.ServiceGenerator
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -23,7 +24,7 @@ class AppModule {
     @Provides
     @Singleton
     fun provideSharedPreferences(app: Application): SharedPreferences =
-        PreferenceManager.getDefaultSharedPreferences(app)
+            PreferenceManager.getDefaultSharedPreferences(app)
 
     @Provides
     @Singleton

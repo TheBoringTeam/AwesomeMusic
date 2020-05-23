@@ -1,12 +1,10 @@
 package com.music.awesomemusic.di.modules
 
-import com.music.awesomemusic.data.repository.UserApiService
+import com.music.awesomemusic.data.repository.AccountApiService
+import com.music.awesomemusic.utils.ServiceGenerator
 import dagger.Module
 import dagger.Provides
-import okhttp3.OkHttpClient
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Module
@@ -16,19 +14,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesApiService(): UserApiService {
-        val retrofit: Retrofit
-        val okHttpClient = OkHttpClient.Builder()
-                .readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .build()
-
-        retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-        return retrofit.create(UserApiService::class.java)
+    fun providesUserRepository(): AccountApiService {
+        //TODO: Clould be optimized via
+        return ServiceGenerator.createService(AccountApiService::class.java)
     }
 }

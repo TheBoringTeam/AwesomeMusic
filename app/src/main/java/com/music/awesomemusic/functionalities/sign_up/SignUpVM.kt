@@ -5,14 +5,18 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.music.awesomemusic.data.model.requests.RequestSignUp
-import com.music.awesomemusic.data.repository.UserApiService
+import com.music.awesomemusic.data.model.responses.ErrorResponse
+import com.music.awesomemusic.data.repository.AccountApiService
+import com.music.awesomemusic.utils.ErrorUtils
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.Converter
 import retrofit2.Response
 import javax.inject.Inject
 
-class SignUpVM @Inject constructor(private val _userService: UserApiService) : ViewModel() {
+
+class SignUpVM @Inject constructor(private val _accountService: AccountApiService) : ViewModel() {
 
     private val _TAG = SignUpVM::class.java.simpleName
 
@@ -30,11 +34,11 @@ class SignUpVM @Inject constructor(private val _userService: UserApiService) : V
         }
 
         // TODO: Change isCollective to some state after specification gonna be ready
-        val signUpCall = _userService.signUp(
-            RequestSignUp(
-                usernameObservableField.get().toString(),
-                passwordObservable.get().toString(), emailObservableField.get().toString(), false
-            )
+        val signUpCall = _accountService.signUp(
+                RequestSignUp(
+                        usernameObservableField.get().toString(),
+                        passwordObservable.get().toString(), emailObservableField.get().toString(), false
+                )
         )
 
         signUpCall.enqueue(object : Callback<ResponseBody> {
@@ -48,6 +52,12 @@ class SignUpVM @Inject constructor(private val _userService: UserApiService) : V
                     201 -> { //CREATED - user signed up OK
                         Log.d(_TAG, "[signUp] User was created successfully")
                         event.value = SignUpState.RegistrationSuccess
+                    }
+                    400 -> {
+                        //Note: DO NOT FUCKING INVOKE response.errorBody().string() . It converts errorBody to string forever. I spend 2 hours to find this bug :(
+                        Log.i(_TAG, "[signUp] Got status code: ${response.code()}")
+                        val error = ErrorUtils.parseError(response)
+                        event.value = SignUpState.ValidationError(error.message)
                     }
                     else -> {
                         Log.e(_TAG, "[signUp] Unhandled error code: ${response.code()}")
@@ -78,7 +88,7 @@ class SignUpVM @Inject constructor(private val _userService: UserApiService) : V
 
         if (username.length > 16) {
             event.value =
-                SignUpState.ValidationError("Username has to be no more than 16 characters")
+                    SignUpState.ValidationError("Username has to be no more than 16 characters")
             return false
         }
 

@@ -9,7 +9,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
-interface UserApiService {
+interface AccountApiService {
     @POST("/api/user/sign-in")
     fun signIn(@Body requestSignIn: RequestSignIn): Call<ResponseSignIn>
 
