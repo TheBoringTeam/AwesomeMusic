@@ -37,15 +37,4 @@ class DialogErrorFragment(private val errorMessage: String) : DialogFragment() {
             dialog?.cancel()
         }
     }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        try {
-            _listener = context as ErrorDialogListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException((context.toString() +
-                    " must implement NoticeDialogListener"))
-        }
-
-    }
 }

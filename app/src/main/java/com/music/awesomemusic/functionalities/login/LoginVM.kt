@@ -6,13 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.music.awesomemusic.data.model.requests.RequestSignIn
 import com.music.awesomemusic.data.model.responses.ResponseSignIn
-import com.music.awesomemusic.data.repository.UserApiService
+import com.music.awesomemusic.data.repository.AccountApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class LoginVM @Inject constructor(private val _userApiService: UserApiService) : ViewModel() {
+class LoginVM @Inject constructor(private val _accountApiService: AccountApiService) : ViewModel() {
 
     private val _TAG = LoginVM::class.java.simpleName
 
@@ -30,7 +30,7 @@ class LoginVM @Inject constructor(private val _userApiService: UserApiService) :
         val username = usernameObservable.get().toString()
         val password = passwordObservable.get().toString()
         Log.i(_TAG, "Username : $username, password $password")
-        val signInCall = _userApiService.signIn(RequestSignIn(username, password))
+        val signInCall = _accountApiService.signIn(RequestSignIn(username, password))
         signInCall.enqueue(object : Callback<ResponseSignIn> {
             override fun onFailure(call: Call<ResponseSignIn>, t: Throwable) {
                 Log.e(_TAG, "[login] Connection error: ${t.message}")
