@@ -2,7 +2,7 @@
     <string name="app_name">Awemusic</string>
     <string name="preference_key">ADoISsJBO14RgA2x3f14</string>
     <string name="password">Password</string>
-    <string name="username">Username</string>
+    <string name="username">Email or username</string>
     <string name="log_in">Log in</string>
     <string name="sign_up">Sign up</string>
     <string name="composer">Composer</string>

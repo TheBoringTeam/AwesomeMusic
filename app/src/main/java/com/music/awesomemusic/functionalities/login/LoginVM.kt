@@ -44,7 +44,7 @@ class LoginVM @Inject constructor(private val _accountApiService: AccountApiServ
                         Log.i(_TAG, "[login] Login successful.")
                         event.value = LoginState.LoginSuccessful(response.body()!!.token)
                     }
-                    401 -> {
+                    403 -> {
                         Log.i(_TAG, "[login] User provided wrong credentials.")
                         event.value = LoginState.WrongCredentials
                     }
